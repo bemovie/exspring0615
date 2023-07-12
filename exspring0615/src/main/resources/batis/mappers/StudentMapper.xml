@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exam.myapp.student.StudentDao">
+  <!-- <select id="selectStudentList" resultType="com.exam.student.StudentVo"> -->
+ 
+  <resultMap type="StudentVo" id="StudentMap">
+		<id property="stuNo" column="stu_no" />
+		<result property="stuName" column="stu_name" />
+		<result property="stuScore" column="stu_score" />
+	</resultMap>
+	
+  <!-- <select id="selectStudentList" resultType="com.exam.student.StudentVo"> -->
+  <select id="selectStudentList" resultType="StudentVo">
+  <!-- <select id="selectStudentList" resultMap="StudentMap"> -->
+    <!-- SELECT stu_no as stuNo, stu_name as stuName, stu_score as stuScore FROM student -->
+  	SELECT stu_no, stu_name, stu_score FROM student
+  </select>
+  
+  <!-- <insert id="addStudent" parameterType="com.exam.student.StudentVo"> -->
+  <insert id="addStudent" parameterType="StudentVo">
+  	INSERT INTO student (stu_no, stu_name, stu_score) 
+  	VALUES ( #{stuNo}, #{stuName}, #{stuScore} )
+  </insert>
+  
+ <!--  <delete id="delStudent" parameterType="com.exam.student.StudentVo"> -->
+  <delete id="delStudent" parameterType="string">
+  	DELETE FROM student WHERE stu_no = #{stuNo}
+  </delete>
+  
+  <select id="selectStudent" resultType="StudentVo">
+  <!-- <select id="selectStudentList" resultMap="StudentMap"> -->
+    <!-- SELECT stu_no as stuNo, stu_name as stuName, stu_score as stuScore FROM student -->
+  	SELECT stu_no, stu_name, stu_score FROM student WHERE stu_no = #{stuNo}
+  </select>
+  
+  <update id="updateStudent" parameterType="StudentVo">
+  	UPDATE student
+  	SET stu_name = #{stuName}, stu_score = #{stuScore}
+  	WHERE stu_no = #{stuNo}
+  </update>
+  
+  <select id="selectLogin" resultType="StudentVo">
+  	SELECT stu_no, stu_name, stu_score FROM student 
+  	WHERE stu_no = #{stuNo} AND stu_name = #{stuName}
+  </select>
+  
+  
+  
+</mapper>

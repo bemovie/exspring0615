@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exam.myapp.reply.ReplyDao">
+  <!-- <select id="selectStudentList" resultType="com.exam.student.StudentVo"> -->
+ 
+  <resultMap type="StudentVo" id="StudentMap">
+		<id property="stuNo" column="stu_no" />
+		<result property="stuName" column="stu_name" />
+		<result property="stuScore" column="stu_score" />
+	</resultMap>
+	
+  <!-- <select id="selectStudentList" resultType="com.exam.student.StudentVo"> -->
+  <!-- <select id="selectBbsList" resultType="BbsVo"> -->
+  <!-- <select id="selectStudentList" resultMap="StudentMap"> -->
+    <!-- SELECT stu_no as stuNo, stu_name as stuName, stu_score as stuScore FROM student -->
+  <!-- 	SELECT bbs_no, bbs_title, bbs_writer, bbs_reg_date
+	FROM stubbs
+  </select> -->
+  
+	<select id="selectReplyList" resultType="ReplyVo">
+	  	SELECT rep_no, rep_content, rep_writer, rep_reg_date, rep_bbs_no
+		FROM stureply
+		WHERE rep_bbs_no = #{repBbsNo}
+		ORDER BY rep_reg_date desc
+	</select>
+  
+  <!-- <select id="selectAttachList" resultType="AttachVo">
+  	SELECT att_no, att_org_name, att_new_name, att_bbs_no
+	FROM stuattach
+	WHERE att_bbs_no = #{bbsNo}
+  </select> -->
+  
+	<select id="selectReply" resultType="ReplyVo">
+		SELECT rep_no, rep_content, rep_writer, rep_reg_date, rep_bbs_no
+		FROM stureply
+		WHERE rep_no = #{repNo}
+	</select>
+  
+	<!-- <select id="selectAttach" resultType="AttachVo">
+		SELECT att_no, att_org_name, att_new_name, att_bbs_no
+		FROM stuattach
+		WHERE att_no = #{attNo} 
+	</select> -->
+  
+  <!-- <insert id="addStudent" parameterType="com.exam.student.StudentVo"> -->
+  <insert id="insertReply">
+  	INSERT INTO stureply (rep_no, rep_content, rep_writer, rep_bbs_no)
+		VALUES ( rep_seq.NEXTVAL, #{repContent}, #{repWriter}, #{repBbsNo} )
+  </insert>
+  
+	<delete id="deleteReply"> <!-- parameterType="string" -->	 
+		DELETE FROM stureply WHERE rep_no = #{repNo}
+	</delete>
+  
+	<!-- <delete id="deleteAttach"> parameterType="string"	 
+		DELETE FROM stuattach WHERE att_no = #{attNo}
+	</delete> -->
+  
+  
+ <!--  <delete id="delStudent" parameterType="com.exam.student.StudentVo"> -->
+	<!-- <delete id="delBbs">
+	DELETE FROM stubbs WHERE bbs_no = #{bbsNo}
+	</delete> -->
+  
+  <select id="selectBbs" resultType="BbsVo">
+  <!-- <select id="selectStudentList" resultMap="StudentMap"> -->
+    <!-- SELECT stu_no as stuNo, stu_name as stuName, stu_score as stuScore FROM student -->
+  	SELECT bbs_no, bbs_title, bbs_content, bbs_writer, bbs_reg_date, bbs_count
+	FROM stubbs
+	WHERE bbs_no = #{bbsNo}
+  </select>
+  
+  <!-- <update id="updateBbs">
+  	UPDATE stubbs
+  	SET bbs_title = #{bbsTitle}, bbs_content = #{bbsContent}
+  	WHERE bbs_no = #{bbsNo}
+  </update> -->
+  
+  <select id="selectLogin" resultType="StudentVo">
+  	SELECT stu_no, stu_name, stu_score FROM student 
+  	WHERE stu_no = #{stuNo} AND stu_name = #{stuName}
+  </select>
+  
+  
+  
+</mapper>
