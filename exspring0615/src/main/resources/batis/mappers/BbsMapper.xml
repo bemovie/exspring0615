@@ -34,6 +34,29 @@
     <!-- SELECT stu_no as stuNo, stu_name as stuName, stu_score as stuScore FROM student -->
   	SELECT bbs_no, bbs_title, bbs_writer, bbs_reg_date
 	FROM stubbs
+	<!-- WHERE -->
+	<where>
+		<if test="searchType == 'title' or searchType == 'total' and searchWord!=null and searchWord!=''">
+		bbs_title LIKE '%' || #{searchWord} || '%'
+		</if>
+		<if test="searchType == 'content' or searchType == 'total' and searchWord!=null and searchWord!=''">
+		OR bbs_content LIKE '%' || #{searchWord} || '%'
+		</if>
+	</where>
+	
+	<!-- <trim prefix="WHERE" prefixOverrides="AND |OR ">
+		<if test="searchType == 'title' or searchType == 'total' and searchWord!=null and searchWord!=''">
+		bbs_title LIKE '%' || #{searchWord} || '%'
+		</if>
+		<if test="searchType == 'content' or searchType == 'total' and searchWord!=null and searchWord!=''">
+		OR bbs_content LIKE '%' || #{searchWord} || '%'
+		</if>
+	</trim> -->
+<!-- 	<if test="searchType == 'total'">
+	bbs_title LIKE '%' || #{searchWord} || '%'
+	OR bbs_content LIKE '%' || #{searchWord} || '%'
+	</if> -->
+	ORDER BY bbs_reg_date DESC
   </select>
   
   <!-- <insert id="addStudent" parameterType="com.exam.student.StudentVo"> -->

@@ -60,9 +60,11 @@ public class BbsController{
 //	@RequestMapping(value = "list.do", method = RequestMethod.GET)
 //	@RequestMapping("list.do")
 	@GetMapping("list.do")
-	public String list(Model model){
-		
-		List<BbsVo> list = bbsService.selectBbsList();
+	public String list(Model model
+						,SearchInfo info
+			)
+	{
+		List<BbsVo> list = bbsService.selectBbsList(info);
 		
 		model.addAttribute("bbsList", list);
 		
@@ -112,11 +114,46 @@ public class BbsController{
 		return "bbs/bbsEdit";
 	}
 
+	
+	@PostMapping("edit.do")
+	protected String edit(BbsVo vo, 
+						 @SessionAttribute("loginUser") StudentVo svo
+						 ) 
+	{
+		vo.setBbsWriter(svo.getStuNo());
+		System.out.println(vo.getBbsWriter());
+				
+		int n = bbsService.updateBbs(vo);
+		System.out.println(n + "개의 게시글 변경 성공");
+		
+		return "redirect:/bbs/list.do";
+	}
+
+
+	@GetMapping("del.do")
+	protected String service(BbsVo vo
+							//, int bbsNo
+							, @SessionAttribute("loginUser") StudentVo svo
+							)
+	{	
+		vo.setBbsWriter(svo.getStuNo());
+		int n = bbsService.delBbs(vo);
+		System.out.println(n + "개의 게시글 삭제 성공");
+
+		return "redirect:/bbs/list.do";
+	}
+	
+	
+	
+	/*
 //	@RequestMapping(value = "edit.do", method = RequestMethod.POST)
 //	@PostMapping(value="edit.do", produces = "application/text; charset=utf8")
 	@PostMapping("edit.do")
 	@ResponseBody
-	protected String edit(BbsVo vo, @SessionAttribute("loginUser") StudentVo svo/*, Model model*/) {
+	protected String edit(BbsVo vo
+			, @SessionAttribute("loginUser") StudentVo svo
+			//, Model model
+			) {
 	
 	//	StudentVo vo = new StudentVo();
 	//	
@@ -159,12 +196,25 @@ public class BbsController{
 		return message;
 //		return "redirect:/bbs/list.do";
 	}
+	*/		
+			
 	
+	
+			
+	/*
 //	@RequestMapping(value = "del.do", method = RequestMethod.GET)
 //	@GetMapping(value="del.do", produces = "application/text; charset=utf8")
 	@GetMapping("del.do")
 	@ResponseBody
-	protected String service(int bbsNo, /*StudentVo vo,*//*String bbsWriter,*//*BbsVo vo,*/ @SessionAttribute("loginUser") StudentVo svo/*, Model model*/) {
+	protected String service(int bbsNo
+							//, StudentVo vo
+							//, String bbsWriter
+							//, BbsVo vo 
+							//, @SessionAttribute("loginUser") StudentVo svo 
+							//, Model model
+							) 
+	{
+							 
 		
 //		String stuNo = req.getParameter("stuNo");
 		
@@ -202,6 +252,7 @@ public class BbsController{
 //		return "redirect:/bbs/list.do";
 		
 	}
+	*/
 	
 	@GetMapping("down.do")
 	protected void download(int attNo/*, AttachVo vo*/ , HttpServletResponse resp) {

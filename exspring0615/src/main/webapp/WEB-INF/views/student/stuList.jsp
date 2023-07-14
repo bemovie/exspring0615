@@ -19,7 +19,7 @@ request.setAttribute("studentList", list);
 
 %> --%>
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
 <meta charset=\"UTF-8\">
@@ -28,9 +28,9 @@ request.setAttribute("studentList", list);
 /* a {text-decoration : none; color : black;} */
 </style>	
 </head>
-<body>
+<body> -->
 
-<jsp:include page="/WEB-INF/views/menu.jsp" />
+<%-- <jsp:include page="/WEB-INF/views/menu.jsp" /> --%>
 
 <%-- <% 
 for (StudentVo vo : list) {
@@ -84,5 +84,5 @@ ${loginUser["stuName"]}
 
 <a href="<c:url value="/student/delform.do"></c:url>">학생삭제</a>
 
-</body>
-</html>
+<!-- </body>
+</html> -->

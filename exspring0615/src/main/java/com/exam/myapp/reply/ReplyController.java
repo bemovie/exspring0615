@@ -12,18 +12,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.exam.myapp.student.StudentVo;
 
-@Controller
+//@Controller
+@RestController
 public class ReplyController {
 	
 	@Autowired 
 	private ReplyService replyService;
 	
 	@GetMapping("/reply/list.do") 
-	@ResponseBody //메서드의 반환값을 그대로 응답메시지 내용으로 전송
+//	@ResponseBody //메서드의 반환값을 그대로 응답메시지 내용으로 전송
 	public List<ReplyVo> list(int repBbsNo) {
 		
 		List<ReplyVo> repList = replyService.selectReplyList(repBbsNo);
@@ -32,7 +34,7 @@ public class ReplyController {
 	}
 	
 	@PostMapping("/reply/add.do") 
-	@ResponseBody
+//	@ResponseBody
 	public Map<String, Object> add(ReplyVo vo 
 //		,HttpSession session
 		,@SessionAttribute("loginUser") StudentVo svo
@@ -52,6 +54,28 @@ public class ReplyController {
 		return map;
 	}
 	
+	@GetMapping("/reply/del.do") 
+//	@ResponseBody
+	public Map<String, Object> del(ReplyVo vo 
+//		,HttpSession session
+		,@SessionAttribute("loginUser") StudentVo svo
+		) {
+		
+//		StudentVo svo = (StudentVo) session.getAttribute("loginUser");
+		vo.setRepWriter(svo.getStuNo());
+		int num = replyService.deleteReply(vo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("ok", true);
+		map.put("result", num);
+		
+//		return "redirect:/bbs/edit.do?bbsNo=" + vo.getRepBbsNo();
+//		return num+"개의 댓글 저장";
+//		return num+"reply add";
+		return map;
+	}
+	
+	/*
 	@GetMapping("/reply/del.do")
 	public String del(int repNo, @SessionAttribute("loginUser") StudentVo svo) {
 		
@@ -64,5 +88,5 @@ public class ReplyController {
 		
 		return "redirect:/bbs/edit.do?bbsNo=" + rvo.getRepBbsNo();
 	}
-
+	*/
 }

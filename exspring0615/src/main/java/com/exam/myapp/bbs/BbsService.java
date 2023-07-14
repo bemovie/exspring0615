@@ -6,13 +6,13 @@ import java.util.List;
 public interface BbsService {
 
 	// ~ StuListServlet ~
-	List<BbsVo> selectBbsList();
+	List<BbsVo> selectBbsList(SearchInfo info);
 
 	// ~ StuAddServlet ~
 	int addBbs(BbsVo vo);
 
 	// ~ StuDelServlet ~
-	int delBbs(int bbsNo);
+	int delBbs(BbsVo vo);
 	
 	BbsVo selectBbs(int bbsNo);
 

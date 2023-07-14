@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>학생 관리</title>
 </head>
-<body>
-<jsp:include page="/WEB-INF/views/menu.jsp" />
+<body> -->
+<%-- <jsp:include page="/WEB-INF/views/menu.jsp" /> --%>
 
 <h2>학생 추가</h2>
 	<form action="${pageContext.request.contextPath}/student/add.do" method="post" enctype="multipart/form-data">
@@ -19,7 +19,8 @@
 		첨부파일: <input type="file" name="bbsFile" /><br>
 		<input type="submit" />
 	</form>
-</body>
-</html>
+	
+<!-- </body>
+</html> -->
 	
 		

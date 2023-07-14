@@ -2,14 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>     
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>학생 관리</title>
 </head>
-<body>
-<jsp:include page="/WEB-INF/views/menu.jsp" />
+<body> -->
+<%-- <jsp:include page="/WEB-INF/views/menu.jsp" /> --%>
 
 <h2>학생 정보 변경</h2>
 	<form action="${pageContext.request.contextPath}/student/edit.do" method="post">
@@ -26,7 +26,8 @@
 	</c:url>
 	<a href="${delUrl}">삭제</a>
 	</form>
-</body>
-</html>
+	
+<!-- </body>
+</html> -->
 	
 		

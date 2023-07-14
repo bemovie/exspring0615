@@ -20,7 +20,7 @@ request.setAttribute("studentList", list);
 
 %> --%>
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
 <meta charset=\"UTF-8\">
@@ -30,9 +30,9 @@ request.setAttribute("studentList", list);
 /* a {text-decoration : none; color : black;} */
 </style>	
 </head>
-<body>
+<body> -->
 
-<jsp:include page="/WEB-INF/views/menu.jsp" />
+<%-- <jsp:include page="/WEB-INF/views/menu.jsp" /> --%>
 
 <%-- <% 
 for (StudentVo vo : list) {
@@ -78,6 +78,24 @@ ${loginUser["stuName"]}
 	</tbody>
 </table>
 
+<form action="">
+	<select name="searchType">
+		<%-- <option ${searchInfo.searchType == 'title'? 'selected' : '' } value="title">제목</option>
+		<option ${searchInfo.searchType == 'content'? 'selected' : '' } value="content">내용</option>
+		<option ${searchInfo.searchType == 'total'? 'selected' : '' } value="total">제목+내용</option> --%>
+		<option value="title">제목</option>
+		<option value="content">내용</option>
+		<option value="total">제목+내용</option>
+	</select>
+	<script type="text/javascript">
+		//document.querySelector('[name="searchType"]').value = '${searchInfo.searchType}'
+		//$('[name="searchType"]').prop('value', '${searchInfo.searchType}');
+		$('[name="searchType"]').val('${searchInfo.searchType}');
+	</script>
+	<input type="text" name="searchWord" value="${searchInfo.searchWord}" /> <!-- 입력된 값을 보낼꺼니까, value는 안 넣어도 됨 -->
+	<input type="submit" value="검색" />
+</form>
+
 <%-- <% 
 }
 %> --%>
@@ -101,5 +119,5 @@ ${loginUser["stuName"]}
 </c:if> --%>
 
 
-</body>
-</html>
+<!-- </body>
+</html> -->

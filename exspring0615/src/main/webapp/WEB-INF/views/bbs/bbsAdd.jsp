@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>게시판</title>
 </head>
-<body>
-<jsp:include page="/WEB-INF/views/menu.jsp" />
+<body> -->
+<%-- <jsp:include page="/WEB-INF/views/menu.jsp" /> --%>
 
 <h2>새글 쓰기</h2>
 	<form action="${pageContext.request.contextPath}/bbs/add.do" method="post" enctype="multipart/form-data">
@@ -19,7 +19,8 @@
 		첨부파일2: <input type="file" name="bbsFile" /><br>
 		<input type="submit" />
 	</form>
-</body>
-</html>
+	
+<!-- </body>
+</html> -->
 	
 		

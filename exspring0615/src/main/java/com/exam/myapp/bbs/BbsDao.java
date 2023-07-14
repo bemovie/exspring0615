@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface BbsDao {
 
 	// ~ StuListServlet ~
-	List<BbsVo> selectBbsList();
+	List<BbsVo> selectBbsList(SearchInfo info);
 
 	// ~ StuAddServlet ~
 	int addBbs(BbsVo vo);

@@ -13,6 +13,6 @@ public interface ReplyDao {
 
 	public ReplyVo selectReply(int repNo);
 
-	public int deleteReply(int repNo);
+	public int deleteReply(ReplyVo vo);
 
 }

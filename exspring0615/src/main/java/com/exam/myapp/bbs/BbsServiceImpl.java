@@ -47,8 +47,8 @@ public class BbsServiceImpl implements BbsService {
 	}
 	
 	@Override
-	public List<BbsVo> selectBbsList() {
-		return studentDao.selectBbsList();
+	public List<BbsVo> selectBbsList(SearchInfo info) {
+		return studentDao.selectBbsList(info);
 	}
 	
 //	@Transactional
@@ -91,8 +91,10 @@ public class BbsServiceImpl implements BbsService {
 	}
 
 	@Override
-	public int delBbs(int bbsNo) {
-		BbsVo bbsVo = studentDao.selectBbs(bbsNo);
+	public int delBbs(BbsVo vo) {
+		BbsVo bbsVo = studentDao.selectBbs(vo.getBbsNo());
+		
+		if ( !bbsVo.getBbsWriter().equals( vo.getBbsWriter() ) ) return 0;
 		
 //		StudentVo stuVo;
 //		bbsVo.setBbsWriter(stuVo.getStuNo());
@@ -104,7 +106,7 @@ public class BbsServiceImpl implements BbsService {
 		}
 
 		
-		return studentDao.delBbs(bbsNo);
+		return studentDao.delBbs(vo.getBbsNo());
 	}
 
 	@Override
