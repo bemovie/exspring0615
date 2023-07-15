@@ -134,6 +134,11 @@ public class BbsServiceImpl implements BbsService {
 		return new File(uploadPath, vo.getAttNewName());
 	}
 
+	@Override
+	public int selectBbsCount(SearchInfo info) {
+		return studentDao.selectBbsCount(info);
+	}
+
 	
 
 }

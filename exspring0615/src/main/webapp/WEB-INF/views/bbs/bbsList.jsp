@@ -78,7 +78,7 @@ ${loginUser["stuName"]}
 	</tbody>
 </table>
 
-<form action="">
+<form id="searchForm" action="${pageContext.request.contextPath}/bbs/list.do">
 	<select name="searchType">
 		<%-- <option ${searchInfo.searchType == 'title'? 'selected' : '' } value="title">제목</option>
 		<option ${searchInfo.searchType == 'content'? 'selected' : '' } value="content">내용</option>
@@ -90,11 +90,24 @@ ${loginUser["stuName"]}
 	<script type="text/javascript">
 		//document.querySelector('[name="searchType"]').value = '${searchInfo.searchType}'
 		//$('[name="searchType"]').prop('value', '${searchInfo.searchType}');
+		if ('${searchInfo.searchType}') {
 		$('[name="searchType"]').val('${searchInfo.searchType}');
+		}
 	</script>
 	<input type="text" name="searchWord" value="${searchInfo.searchWord}" /> <!-- 입력된 값을 보낼꺼니까, value는 안 넣어도 됨 -->
+	<input type="hidden" name="currentPageNo" value="1" />
 	<input type="submit" value="검색" />
 </form>
+
+${searchInfo.pageHtml}
+<script type="text/javascript">
+	function goPage(n) {
+		document.querySelector('[name="currentPageNo"]').value = n;
+		document.querySelector('#searchForm').submit();
+		//location.href = location.pathname + '?currentPageNo=' + n;
+		//location.href = 'http://localhost:8000/myapp/bbs/list.do?currentPageNo=' + n;
+	}
+</script>
 
 <%-- <% 
 }

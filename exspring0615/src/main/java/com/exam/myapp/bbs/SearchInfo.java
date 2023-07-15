@@ -1,6 +1,6 @@
 package com.exam.myapp.bbs;
 
-public class SearchInfo {
+public class SearchInfo extends PageInfo {
 	private String searchType;
 	private String searchWord;
 	

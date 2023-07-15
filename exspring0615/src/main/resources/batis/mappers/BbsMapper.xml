@@ -22,27 +22,65 @@
 			<result property="stuNo" column="stu_no" />
 		</collection> -->
 		
-		
 		<collection property="attachList" ofType="AttachVo" column="bbs_no" select="com.exam.myapp.bbs.AttachDao.selectAttachList"/>
-		<!-- <collection property="studentList" ofType="StudentVo" select="com.exam.myapp.student.StudentDaoselectStudentList" /> -->
-		
+		<!-- <collection property="studentList" ofType="StudentVo" select="com.exam.myapp.student.StudentDaoselectStudentList" /> -->	
 	</resultMap>
 	
-  <!-- <select id="selectStudentList" resultType="com.exam.student.StudentVo"> -->
-  <select id="selectBbsList" resultType="BbsVo">
-  <!-- <select id="selectStudentList" resultMap="StudentMap"> -->
-    <!-- SELECT stu_no as stuNo, stu_name as stuName, stu_score as stuScore FROM student -->
-  	SELECT bbs_no, bbs_title, bbs_writer, bbs_reg_date
+	<sql id="searchCondition">
+		<where>
+			<if test="searchType == 'title' or searchType == 'total' and searchWord!=null and searchWord!=''">
+			bbs_title LIKE '%' || #{searchWord} || '%'
+			</if>
+			<if test="searchType == 'content' or searchType == 'total' and searchWord!=null and searchWord!=''">
+			OR bbs_content LIKE '%' || #{searchWord} || '%'
+			</if>
+		</where>
+	</sql>
+	
+	
+	
+	<select id="selectBbsCount" resultType="int">
+	SELECT COUNT(*)
 	FROM stubbs
+	<include refid="searchCondition"></include>
 	<!-- WHERE -->
-	<where>
+	<!-- <where>
 		<if test="searchType == 'title' or searchType == 'total' and searchWord!=null and searchWord!=''">
 		bbs_title LIKE '%' || #{searchWord} || '%'
 		</if>
 		<if test="searchType == 'content' or searchType == 'total' and searchWord!=null and searchWord!=''">
 		OR bbs_content LIKE '%' || #{searchWord} || '%'
 		</if>
-	</where>
+	</where> -->
+	</select>	
+	
+  <!-- <select id="selectStudentList" resultType="com.exam.student.StudentVo"> -->
+  <select id="selectBbsList" resultType="BbsVo">
+  <!-- <select id="selectStudentList" resultMap="StudentMap"> -->
+    <!-- SELECT stu_no as stuNo, stu_name as stuName, stu_score as stuScore FROM student -->
+  	<!-- SELECT bbs_no, bbs_title, bbs_writer, bbs_reg_date
+	FROM stubbs -->
+	SELECT rnum, bbs_no, bbs_title, bbs_writer, bbs_reg_date, bbs_count
+	FROM (
+  		SELECT ROWNUM rnum, bbs_no, bbs_title, bbs_writer, bbs_reg_date, bbs_count
+		 FROM (
+		    SELECT bbs_no, bbs_title, bbs_writer, bbs_reg_date, bbs_count
+		   	FROM stubbs
+		   	<include refid="searchCondition"></include>
+		    ORDER BY bbs_reg_date DESC, bbs_no DESC
+		  	)
+		 WHERE ROWNUM <![CDATA[<=]]> #{lastRecordIndex}
+	)
+	WHERE #{firstRecordIndex} <![CDATA[<]]> rnum
+	<!-- WHERE -->
+	<!-- <where>
+		<if test="searchType == 'title' or searchType == 'total' and searchWord!=null and searchWord!=''">
+		bbs_title LIKE '%' || #{searchWord} || '%'
+		</if>
+		<if test="searchType == 'content' or searchType == 'total' and searchWord!=null and searchWord!=''">
+		OR bbs_content LIKE '%' || #{searchWord} || '%'
+		</if>
+	</where> -->
 	
 	<!-- <trim prefix="WHERE" prefixOverrides="AND |OR ">
 		<if test="searchType == 'title' or searchType == 'total' and searchWord!=null and searchWord!=''">
@@ -56,7 +94,7 @@
 	bbs_title LIKE '%' || #{searchWord} || '%'
 	OR bbs_content LIKE '%' || #{searchWord} || '%'
 	</if> -->
-	ORDER BY bbs_reg_date DESC
+	<!-- ORDER BY bbs_reg_date DESC -->
   </select>
   
   <!-- <insert id="addStudent" parameterType="com.exam.student.StudentVo"> -->

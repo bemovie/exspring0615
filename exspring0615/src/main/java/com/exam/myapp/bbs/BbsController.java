@@ -64,6 +64,13 @@ public class BbsController{
 						,SearchInfo info
 			)
 	{
+		
+		int cnt = bbsService.selectBbsCount(info);
+		
+		info.setTotalRecordCount(cnt);
+		
+		info.makePageHtml();
+		
 		List<BbsVo> list = bbsService.selectBbsList(info);
 		
 		model.addAttribute("bbsList", list);

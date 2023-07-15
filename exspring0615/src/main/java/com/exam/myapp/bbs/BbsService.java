@@ -24,4 +24,6 @@ public interface BbsService {
 
 	File getAttachFile(AttachVo vo);
 
+	int selectBbsCount(SearchInfo info);
+
 }

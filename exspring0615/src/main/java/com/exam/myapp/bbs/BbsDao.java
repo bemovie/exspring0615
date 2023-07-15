@@ -22,4 +22,6 @@ public interface BbsDao {
 
 	BbsVo selectLogin(BbsVo vo);
 
+	int selectBbsCount(SearchInfo info);
+
 }
