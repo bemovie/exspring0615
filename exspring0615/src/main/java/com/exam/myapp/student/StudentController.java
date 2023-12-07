@@ -16,10 +16,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,15 +54,31 @@ public class StudentController{
 		
 		return "student/stuList";
 	}
-
+	
+	
 	@RequestMapping(value = "/student/add.do", method = RequestMethod.GET)
-	public String addform() {
+	public String addform(StudentVo vo) {
 //		req.getRequestDispatcher("/WEB-INF/views/student/stuAdd.jsp").forward(req, resp);
 		return "student/stuAdd";
 	}
 	
 	@RequestMapping(value = "/student/add.do", method = RequestMethod.POST)
-	public String add(StudentVo vo) {
+	public String add(@Valid StudentVo vo, BindingResult result) {
+		
+		System.out.println(result.getAllErrors());
+		
+		if(result.hasErrors()) {
+	//		List<FieldError> fieldErrors = result.getFieldErrors();
+			for	(FieldError fe : result.getFieldErrors()) {
+				System.out.println("** " + fe.getField() );
+	//			String[] codes = fe.getCodes();
+				for (String c : fe.getCodes()) {
+					System.out.println(c);
+				}
+			}
+			return "/student/stuAdd";
+		}
+		
 		
 //		req.setCharacterEncoding("UTF-8");
 		
